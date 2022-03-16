@@ -17,7 +17,16 @@ from django.contrib import admin
 from django.urls import path
 from django.urls import include
 
+
+def redirect_to_index(reqeust):
+    """ 重定向到主页
+    """
+    from django.shortcuts import redirect
+    return redirect('Index:index')
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', redirect_to_index),
     path('index/', include('Index.urls')),
 ]
