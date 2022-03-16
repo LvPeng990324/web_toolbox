@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>在线工具箱 | {% block title_name %}{% endblock %}</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/admin-lte/3.2.0/css/adminlte.min.css">
+  <!-- 自定义css -->
+  {% block css_content %}
+  {% endblock %}
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+    </ul>
+  </nav>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="" class="brand-link text-center">
+      <span class="brand-text font-weight-light">在线工具箱</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+
+      <!-- SidebarSearch Form -->
+      <div class="form-inline">
+        <div class="input-group" data-widget="sidebar-search">
+          <input class="form-control form-control-sidebar" type="search" placeholder="搜索" aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-sidebar">
+              <i class="fas fa-search fa-fw"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          <li class="nav-item">
+            <a href="{% url 'Index:index' %}" class="nav-link {% block index_active %}{% endblock %}">
+              <i class="nav-icon fas fa-home"></i>
+              <p>首页</p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                父页
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>子页1</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>子页2</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                单独页
+                <span class="right badge badge-danger">New</span>
+              </p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">{% block page_name %}{% endblock %}</h1>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    {% block main_content %}
+    {% endblock %}
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+    <div class="p-3">
+      <h5>Title</h5>
+      <p>Sidebar content</p>
+    </div>
+  </aside>
+  <!-- /.control-sidebar -->
+
+  <!-- Main Footer -->
+  <footer class="main-footer">
+    <!-- To the right -->
+    <div class="float-right d-none d-sm-inline">
+      <a href="https://github.com/LvPeng990324"><i class="fa-brands fa-github"></i> 在Github上关注我</a>
+    </div>
+    <!-- Default to the left -->
+    <strong>Copyright &copy; 2022 <a href="https://beian.miit.gov.cn/">鲁ICP备19046501号-1</a>.</strong>
+  </footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="https://cdn.bootcdn.net/ajax/libs/admin-lte/3.2.0/js/adminlte.min.js"></script>
+<!-- 自定义js -->
+{% block js_content %}
+{% endblock %}
+</body>
+</html>
