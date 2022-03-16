@@ -63,38 +63,24 @@
             </a>
           </li>
 
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+          <li class="nav-item {% block picture_related_menu_open %}{% endblock %}">
+            <a href="#" class="nav-link {% block picture_related_active %}{% endblock %}">
+              <i class="nav-icon fa-solid fa-image"></i>
               <p>
-                父页
+                图片相关
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>子页1</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>子页2</p>
+                <a href="{% url 'CompressPicture:compress_picture' %}" class="nav-link {% block compress_picture_active %}{% endblock %}">
+                  <i class="nav-icon fa-solid fa-minimize"></i>
+                  <p>图片压缩</p>
                 </a>
               </li>
             </ul>
           </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                单独页
-                <span class="right badge badge-danger">New</span>
-              </p>
-            </a>
-          </li>
+
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

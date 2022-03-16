@@ -29,4 +29,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', redirect_to_index),
     path('index/', include('Index.urls')),
+    path('compress-picture/', include('CompressPicture.urls')),
 ]
