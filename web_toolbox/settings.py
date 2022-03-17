@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'Index.apps.IndexConfig',
     'CompressPicture.apps.CompresspictureConfig',
+    'TextEncodeDecode.apps.TextencodedecodeConfig',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,82 @@
+{% extends 'base_files/adminlte_base.html' %}
+
+{% block text_encode_decode_active %}active{% endblock %}
+{% block title_name %}文本加解密{% endblock %}
+{% block page_name %}文本加解密{% endblock %}
+
+{% block main_content %}
+  <div class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <textarea id="id_textarea" class="form-control" rows="3" placeholder="输入文本 ..."></textarea>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <button type="button" class="btn btn-block btn-primary btn-lg" onclick="url_encoder()">URL加密</button>
+            <button type="button" class="btn btn-block btn-success btn-lg" onclick="url_decoder()">URL解密</button>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <button type="button" class="btn btn-block btn-primary btn-lg" onclick="base64_encoder()">Base64加密</button>
+            <button type="button" class="btn btn-block btn-success btn-lg" onclick="base64_decoder()">Base64解密</button>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <button type="button" class="btn btn-block btn-primary btn-lg" onclick="md5_encode()">MD5加密</button>
+            <button type="button" class="btn btn-block btn-success btn-lg" disabled>MD5无法解密</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block js_content %}
+<script src="https://cdn.bootcdn.net/ajax/libs/spark-md5/3.0.2/spark-md5.min.js"></script>
+<script>
+{# URL加密 #}
+function url_encoder() {
+    let attr = document.getElementById('id_textarea')
+    let text = attr.value;  // 获取原始文本
+    console.log(text)
+    attr.value = encodeURIComponent(text);  // 将文本框内容替换为加密后的字符
+}
+
+{# URL解密 #}
+function url_decoder() {
+    let attr = document.getElementById('id_textarea')
+    let text = attr.value;  // 获取原始文本
+    console.log(text)
+    attr.value = decodeURIComponent(text);  // 将文本框内容替换为解密后的字符
+}
+
+{# Base64加密 #}
+function base64_encoder() {
+    let attr = document.getElementById('id_textarea')
+    let text = attr.value;  // 获取原始文本
+    console.log(text)
+    attr.value = btoa(encodeURIComponent(text));  // 将文本框内容替换为加密后的字符
+}
+
+{# Base64解密 #}
+function base64_decoder() {
+    let attr = document.getElementById('id_textarea')
+    let text = attr.value;  // 获取原始文本
+    console.log(text)
+    attr.value = decodeURIComponent(atob(text));  // 将文本框内容替换为解密后的字符
+}
+
+{# MD5加密 #}
+function md5_encode() {
+    let attr = document.getElementById('id_textarea')
+    let text = attr.value;  // 获取原始文本
+    console.log(text)
+    attr.value = SparkMD5.hash(text);  // 将文本框内容替换为加密后的字符
+}
+</script>
+{% endblock %}

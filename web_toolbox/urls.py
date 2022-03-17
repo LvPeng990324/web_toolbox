@@ -30,4 +30,5 @@ urlpatterns = [
     path('', redirect_to_index),
     path('index/', include('Index.urls')),
     path('compress-picture/', include('CompressPicture.urls')),
+    path('text-encode-decode/', include('TextEncodeDecode.urls')),
 ]
