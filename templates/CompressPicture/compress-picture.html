@@ -6,14 +6,271 @@
 {% block title_name %}图片压缩{% endblock %}
 {% block page_name %}图片压缩{% endblock %}
 
+{% block css_content %}
+<style>
+  .border-dark {
+    border-color: rgb(206, 212, 218) !important;
+  }
+
+  .header {
+    padding: 20px 20px 0 20px;
+  }
+
+  .alert-warning {
+    font-size: 12px;
+  }
+
+  #input,
+  #output {
+    margin-top: 0.5rem;
+    overflow: auto;
+    max-height: 600px;
+  }
+</style>
+{% endblock %}
+
 {% block main_content %}
-  <div class="content">
-    <div class="container-fluid">
-      <div class="row">
-
-        <p>图片压缩区</p>
-
+<div style="margin:0 50px">
+  <div class="row">
+    <div class="col-md-4 border border-dark rounded pt-3 pb-3">
+      <h2>选项</h2>
+      <div style="font-size: 13px;">对图片操作的详细配置</div>
+      <hr>
+      <div class="custom-file mb-3">
+        <input type="file" class="custom-file-input" id="file" onchange="change()">
+        <label class="custom-file-label" id="fileName" style="overflow: auto;">选择图片</label>
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">*大小</span>
+        </div>
+        <input type="number" id="size" class="form-control" placeholder="compressed image size"
+          value=80>
+        <div class="input-group-append">
+          <span class="input-group-text">KB</span>
+        </div>
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">精确度</span>
+        </div>
+        <input type="number" id="accuracy" placeholder="取值区间 0.8~0.99" class="form-control">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text">类型</label>
+        </div>
+        <select class="custom-select" id="type">
+          <option selected>Choose...</option>
+          <option value="image/png">image/png</option>
+          <option value="image/jpeg">image/jpeg</option>
+          <option value="image/gif">image/gif</option>
+        </select>
+      </div>
+      <div class="alert alert-warning" role="alert">
+        如果要压缩 png 透明图片，请选择 'image/png' 类型
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">宽</span>
+        </div>
+        <input type="number" id="width" class="form-control" onfocus="change2('width')">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">高</span>
+        </div>
+        <input type="number" id="height" class="form-control" onfocus="change2('height')">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">缩放比例</span>
+        </div>
+        <input type="number" id="scale" class="form-control" value="0.5" placeholder="range 0~10"
+          onfocus="change2('scale')">
+      </div>
+      <div class="alert alert-warning" role="alert">
+        缩放比例选项将覆盖 宽度 和 高度 选项
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text">旋转</label>
+        </div>
+        <select class="custom-select" id="orientation">
+          <option selected>请选择...</option>
+          <option value="1">旋转（默认不旋转）</option>
+          <option value="2">水平翻转</option>
+          <option value="3">180°</option>
+          <option value="4">垂直翻转</option>
+          <option value="5">顺时针 90° + 水平翻转</option>
+          <option value="6">顺时针 90°</option>
+          <option value="7">顺时针 90° + 垂直翻转</option>
+          <option value="8">逆时针90°</option>
+        </select>
+      </div>
+      <button class="btn btn-primary btn-block" onclick="compress()">开始压缩</button>
+    </div>
+    <div class="col-md-8 pt-sm-0 pl-sm-3" style="padding:1rem 0 0 0">
+      <div class="col border border-dark rounded pt-3 pb-3">
+        <h2>原始图片</h2>
+        <hr>
+        <div class="row">
+          <div class="col">
+            <span>尺寸:</span>
+            <span id="input_size"></span>
+          </div>
+          <div class="col">
+            <span>类型:</span>
+            <span id="input_type"></span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <span>宽:</span>
+            <span id="input_width"></span>
+          </div>
+          <div class="col">
+            <span>高:</span>
+            <span id="input_height"></span>
+          </div>
+        </div>
+        <div id="input" class="border border-dark"></div>
       </div>
     </div>
   </div>
+  <div class="row mt-3">
+    <div class="col border border-dark rounded pt-3 pb-3">
+      <h2>压缩后图片</h2>
+      <hr>
+      <div class="row">
+        <div class="col">
+          <span>大小:</span>
+          <span id="output_size"></span>
+        </div>
+        <div class="col">
+          <span>类型:</span>
+          <span id="output_type"></span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <span>宽:</span>
+          <span id="output_width"></span>
+        </div>
+        <div class="col">
+          <span>高:</span>
+          <span id="output_height"></span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <button class="btn btn-success btn-sm" onclick="download()">下载</button>
+        </div>
+        <div class="col">
+          <span>使用时间:</span>
+          <span id="output_runtime"></span>
+        </div>
+      </div>
+      <div>
+      </div>
+      <div id="output" class="border border-dark"></div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block js_content %}
+<script src="https://cdn.jsdelivr.net/gh/WangYuLue/image-conversion/build/conversion.js"></script>
+<script>
+  const data = {
+    file: null,
+    compress_file: null,
+    runtime: null
+  }
+
+  init();
+
+  async function init() {
+    const file = await imageConversion.urltoBlob('https://static.runoob.com/images/demo/demo2.jpg');
+    data.file = file;
+    const image = await filetoImage(file);
+    showMessage(file, image, "input");
+    compress()
+  }
+
+  function getDom(domId) {
+    return document.getElementById(domId)
+  }
+
+  async function change() {
+    const file = getDom("file").files[0];
+    data.file = file;
+    const image = await filetoImage(file);
+    showMessage(file, image, "input");
+  }
+  //Setting config.scale will override the settings of
+  //config.width and config.height;
+  function change2(type) {
+    if (type === "width" || type === "height") {
+      getDom("scale").value = '';
+    } else if (type === "scale") {
+      getDom("width").value = '';
+      getDom("height").value = '';
+    }
+  }
+
+  function showMessage(file, image, name) {
+    const size = (file.size / 1024).toFixed(2);
+    if (name === "output") {
+      const origin_size = getDom("size").value;
+      getDom(name + "_size").innerText = size + " KB (accuracy:" + ((1 - Math.abs(1 - size / origin_size)) * 100).toFixed(2) + "%)";
+      if (data.runtime) {
+        getDom(name + "_runtime").innerText = data.runtime + " ms";
+      }
+    } else {
+      getDom("fileName").innerText = file.name || "Choose file";
+      getDom(name + "_size").innerText = size + " KB";
+    }
+    getDom(name + "_type").innerText = file.type;
+    getDom(name + "_width").innerText = image.width + " px";
+    getDom(name + "_height").innerText = image.height + " px";
+    getDom(name).innerHTML = '';
+    getDom(name).append(image);
+  }
+
+  async function compress() {
+    const file = data.file;
+    const size = getDom("size").value;
+    const accuracy = getDom("accuracy").value;
+    const type = getDom("type").value;
+    const width = getDom("width").value;
+    const height = getDom("height").value;
+    const scale = getDom("scale").value;
+    const orientation = getDom("orientation").value;
+    const startTime = Date.now();
+    const compress_file = await imageConversion.compressAccurately(file, {
+      size,
+      accuracy,
+      type,
+      width,
+      height,
+      scale,
+      orientation
+    });
+    data.runtime = Date.now() - startTime;
+    // const compress_file = await imageConversion.compress(file, '0.83');
+    const compress_image = await filetoImage(compress_file);
+    data.compress_file = compress_file;
+    showMessage(compress_file, compress_image, "output");
+  }
+
+  async function filetoImage(file) {
+    const dataURL = await imageConversion.filetoDataURL(file);
+    return await imageConversion.dataURLtoImage(dataURL);
+  }
+
+  function download() {
+    imageConversion.downloadFile(data.compress_file);
+  }
+</script>
 {% endblock %}
