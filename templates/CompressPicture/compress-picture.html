@@ -1,4 +1,5 @@
 {% extends 'base_files/adminlte_base.html' %}
+{% load static %}
 
 {% block picture_related_menu_open %}menu-open{% endblock %}
 {% block picture_related_active %}active{% endblock %}
@@ -191,7 +192,7 @@
   init();
 
   async function init() {
-    const file = await imageConversion.urltoBlob('https://static.runoob.com/images/demo/demo2.jpg');
+    const file = await imageConversion.urltoBlob('{% static 'img/demo.jpg' %}');
     data.file = file;
     const image = await filetoImage(file);
     showMessage(file, image, "input");
