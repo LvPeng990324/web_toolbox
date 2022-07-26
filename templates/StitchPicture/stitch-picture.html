@@ -1,0 +1,88 @@
+{% extends 'base_files/adminlte_base.html' %}
+
+{% block stitch_picture_active %}active{% endblock %}
+{% block title_name %}图片拼接{% endblock %}
+{% block page_name %}图片拼接{% endblock %}
+
+{% block main_content %}
+<div>
+  <label for="id_set_width">先设定宽度</label>
+  <input id="id_set_width" placeholder="图片宽度，默认300px" oninput="setWidth(this)">
+</div>
+
+<div>
+  <input id="upload-input" type="file" accept="image/*" multiple="multiple" style="display: none;">
+  <label class="btn btn-info" for="upload-input">点击选择图片</label>
+</div>
+
+<div id="image-container"></div>
+{% endblock %}
+
+{% block js_content %}
+<script>
+    // 拼出来的图片的宽度
+    let width = 300
+    // 拼出来的图片的质量，0-1之间，越大质量越好
+    const encoderOptions =1
+
+    const uploadInput = document.getElementById('upload-input')
+    const imageDiv = document.getElementById('image-container')
+
+    uploadInput.addEventListener('change', event => {
+        const files = Array.from(event.target.files)
+        filesToInstances(files, instances => {
+            drawImages(instances, finalImageUrl => {
+                imageDiv.innerHTML = `<div><a download href=${finalImageUrl}>点击下载</a><br><img src=${finalImageUrl}></div>`
+            })
+        })
+    })
+
+    // 根据图片文件拿到图片实例
+    const filesToInstances = (files, callback) => {
+        const length = files.length
+        let instances = []
+        let finished = 0
+
+        files.forEach((file, index) => {
+            const reader = new FileReader()
+            // 把文件读为 dataUrl
+            reader.readAsDataURL(file)
+            reader.onload = e => {
+                const image = new Image()
+                image.src = e.target.result
+                image.onload = () => {
+                    // 图片实例化成功后存起来
+                    instances[index] = image
+                    finished ++
+                    if (finished === length) {
+                        callback(instances)
+                    }
+                }
+            }
+        })
+    }
+
+    // 设定宽度
+    const setWidth = function (inputAttr) {
+        width = inputAttr.value
+    }
+
+    // 拼图
+    const drawImages = (images, callback) => {
+        const heights = images.map(item => width / item.width * item.height)
+        const canvas = document.createElement('canvas')
+        canvas.width = width
+        canvas.height = heights.reduce((total, current) => total + current)
+        const context = canvas.getContext('2d')
+
+        let y = 0
+
+        images.forEach((item, index) => {
+            const height = heights[index]
+            context.drawImage(item, 0, y, width, height)
+            y += height
+        })
+        callback(canvas.toDataURL('image/jpeg', encoderOptions))
+    }
+</script>
+{% endblock %}

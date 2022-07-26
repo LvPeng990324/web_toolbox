@@ -31,4 +31,5 @@ urlpatterns = [
     path('index/', include('Index.urls')),
     path('compress-picture/', include('CompressPicture.urls')),
     path('text-encode-decode/', include('TextEncodeDecode.urls')),
+    path('stitch-picture/', include('StitchPicture.urls')),
 ]

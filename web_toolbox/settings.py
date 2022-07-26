@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'Index.apps.IndexConfig',
     'CompressPicture.apps.CompresspictureConfig',
     'TextEncodeDecode.apps.TextencodedecodeConfig',
+    'StitchPicture.apps.StitchpictureConfig',
 ]
 
 MIDDLEWARE = [
