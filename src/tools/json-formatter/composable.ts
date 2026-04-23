@@ -1,42 +1,28 @@
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 
 export function useJsonFormatter() {
   const input = ref('')
   const error = ref('')
 
-  const formatted = computed(() => {
-    error.value = ''
-    if (!input.value.trim()) return ''
-    try {
-      const parsed = JSON.parse(input.value)
-      return JSON.stringify(parsed, null, 2)
-    } catch (e: any) {
-      error.value = e.message
-      return ''
-    }
-  })
-
-  const compressed = computed(() => {
-    error.value = ''
-    if (!input.value.trim()) return ''
-    try {
-      const parsed = JSON.parse(input.value)
-      return JSON.stringify(parsed)
-    } catch (e: any) {
-      error.value = e.message
-      return ''
-    }
-  })
-
   const format = () => {
-    if (formatted.value) {
-      input.value = formatted.value
+    error.value = ''
+    if (!input.value.trim()) return
+    try {
+      const parsed = JSON.parse(input.value)
+      input.value = JSON.stringify(parsed, null, 2)
+    } catch (e: any) {
+      error.value = e.message
     }
   }
 
   const compress = () => {
-    if (compressed.value) {
-      input.value = compressed.value
+    error.value = ''
+    if (!input.value.trim()) return
+    try {
+      const parsed = JSON.parse(input.value)
+      input.value = JSON.stringify(parsed)
+    } catch (e: any) {
+      error.value = e.message
     }
   }
 
@@ -45,5 +31,5 @@ export function useJsonFormatter() {
     error.value = ''
   }
 
-  return { input, error, formatted, compressed, format, compress, clear }
+  return { input, error, format, compress, clear }
 }

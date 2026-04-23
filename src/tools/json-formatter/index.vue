@@ -11,42 +11,43 @@
     </div>
 
     <!-- Editor -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-      <div class="relative">
-        <label class="block text-sm font-medium mb-2" :style="{ color: 'var(--text-secondary)' }">输入</label>
+    <div class="relative">
+      <label class="block text-sm font-medium mb-2" :style="{ color: 'var(--text-secondary)' }">输入</label>
+      <div class="editor-wrapper">
+        <div class="line-numbers" ref="lineNumbersRef">
+          <div v-for="n in lineCount" :key="n" class="line-number">{{ n }}</div>
+        </div>
         <textarea v-model="input"
           class="editor-textarea"
           placeholder='粘贴 JSON 数据，例如: {"name": "web toolbox"}'
           rows="20"
-          spellcheck="false"></textarea>
+          spellcheck="false"
+          @scroll="syncScroll"></textarea>
       </div>
-      <div class="relative">
-        <label class="block text-sm font-medium mb-2" :style="{ color: 'var(--text-secondary)' }">
-          输出
-          <span v-if="error" class="text-red-500 ml-2">{{ error }}</span>
-        </label>
-        <pre v-if="formatted" class="editor-output"><code>{{ formatted }}</code></pre>
-        <div v-else class="editor-output flex items-center justify-center text-sm"
-          :style="{ color: 'var(--text-muted)' }">
-          {{ error ? '' : '格式化结果将在此显示' }}
-        </div>
-      </div>
-    </div>
-
-    <!-- Error -->
-    <div v-if="error" class="mt-3 p-3 rounded-lg bg-red-500/10 text-red-500 text-sm">
-      <AlertCircle :size="16" class="inline mr-1.5" />
-      {{ error }}
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { FileJson, Minimize2, Trash2, AlertCircle } from 'lucide-vue-next'
+import { computed, ref } from 'vue'
+import { FileJson, Minimize2, Trash2 } from 'lucide-vue-next'
 import CopyButton from '../../components/CopyButton.vue'
 import { useJsonFormatter } from './composable'
 
-const { input, error, formatted, format, compress, clear } = useJsonFormatter()
+const { input, format, compress, clear } = useJsonFormatter()
+
+const lineNumbersRef = ref<HTMLElement | null>(null)
+
+const lineCount = computed(() => {
+  const lines = input.value.split('\n').length
+  return Math.max(lines, 20)
+})
+
+const syncScroll = (e: Event) => {
+  if (lineNumbersRef.value) {
+    lineNumbersRef.value.scrollTop = (e.target as HTMLTextAreaElement).scrollTop
+  }
+}
 </script>
 
 <style scoped>
@@ -66,35 +67,42 @@ const { input, error, formatted, format, compress, clear } = useJsonFormatter()
   background: rgba(255,255,255,0.1);
 }
 
+.editor-wrapper {
+  display: flex;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background-color: var(--surface);
+  overflow: hidden;
+}
+.line-numbers {
+  padding: 12px 8px;
+  background-color: var(--surface);
+  border-right: 1px solid var(--border);
+  user-select: none;
+  overflow: hidden;
+  text-align: right;
+  min-width: 40px;
+}
+.line-number {
+  font-family: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
 .editor-textarea {
   width: 100%;
   padding: 12px;
-  border-radius: 8px;
+  border: none;
+  border-radius: 0;
   font-family: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
   font-size: 13px;
   line-height: 1.6;
   resize: vertical;
   outline: none;
   background-color: var(--surface);
-  border: 1px solid var(--border);
   color: var(--text-primary);
 }
 .editor-textarea:focus {
-  border-color: #4F6EF7;
-}
-
-.editor-output {
-  width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  font-family: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
-  font-size: 13px;
-  line-height: 1.6;
-  overflow: auto;
-  white-space: pre-wrap;
-  word-break: break-all;
-  background-color: var(--surface);
-  border: 1px solid var(--border);
-  color: var(--text-primary);
+  outline: none;
 }
 </style>
