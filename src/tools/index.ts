@@ -5,6 +5,9 @@ import { meta as hashGeneratorMeta } from './hash-generator/meta'
 import { meta as textDiffMeta } from './text-diff/meta'
 import { meta as regexTesterMeta } from './regex-tester/meta'
 import { meta as dateDurationMeta } from './date-duration/meta'
+import { meta as imageCompressMeta } from './image-compress/meta'
+import { meta as imageCropMeta } from './image-crop/meta'
+import { meta as imageMergeMeta } from './image-merge/meta'
 
 export const tools: ToolMeta[] = [
   jsonFormatterMeta,
@@ -13,6 +16,9 @@ export const tools: ToolMeta[] = [
   textDiffMeta,
   regexTesterMeta,
   dateDurationMeta,
+  imageCompressMeta,
+  imageCropMeta,
+  imageMergeMeta,
 ]
 
 export const toolMap = new Map(tools.map(t => [t.id, t]))
