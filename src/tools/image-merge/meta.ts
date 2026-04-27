@@ -5,5 +5,5 @@ export const meta: ToolMeta = {
   name: '图片拼接',
   description: '将多张图片水平或垂直拼接，支持设置间距和背景颜色',
   icon: 'GalleryHorizontalEnd',
-  category: '图片处理',
+  category: '媒体处理',
 }

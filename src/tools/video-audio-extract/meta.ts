@@ -5,5 +5,5 @@ export const meta: ToolMeta = {
   name: '视频音频提取',
   description: '从本地视频文件中提取音频，直接下载为音频文件',
   icon: 'Music',
-  category: '音视频处理',
+  category: '媒体处理',
 }

@@ -5,5 +5,5 @@ export const meta: ToolMeta = {
   name: '图片裁切',
   description: '自定义裁切区域，支持百分比和像素两种模式',
   icon: 'Crop',
-  category: '图片处理',
+  category: '媒体处理',
 }
