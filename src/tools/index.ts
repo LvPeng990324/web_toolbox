@@ -8,6 +8,8 @@ import { meta as dateDurationMeta } from './date-duration/meta'
 import { meta as imageCompressMeta } from './image-compress/meta'
 import { meta as imageCropMeta } from './image-crop/meta'
 import { meta as imageMergeMeta } from './image-merge/meta'
+import { meta as videoAudioExtractMeta } from './video-audio-extract/meta'
+import { meta as audioEditorMeta } from './audio-editor/meta'
 
 export const tools: ToolMeta[] = [
   jsonFormatterMeta,
@@ -19,6 +21,8 @@ export const tools: ToolMeta[] = [
   imageCompressMeta,
   imageCropMeta,
   imageMergeMeta,
+  videoAudioExtractMeta,
+  audioEditorMeta,
 ]
 
 export const toolMap = new Map(tools.map(t => [t.id, t]))

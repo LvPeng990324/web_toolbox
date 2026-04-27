@@ -11,6 +11,10 @@
     --text-muted: #9CA3AF;
     --border: #E5E7EB;
     --shadow: 0 1px 3px rgba(0,0,0,0.06);
+    --primary: #4F6EF7;
+    --primary-light: #6C8AFF;
+    --secondary: #7C3AED;
+    --secondary-light: #8B5CF6;
   }
 
   .dark {
@@ -21,6 +25,10 @@
     --text-muted: #6B7280;
     --border: #374151;
     --shadow: 0 1px 3px rgba(0,0,0,0.3);
+    --primary: #4F6EF7;
+    --primary-light: #6C8AFF;
+    --secondary: #7C3AED;
+    --secondary-light: #8B5CF6;
   }
 
   * {
