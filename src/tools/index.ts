@@ -13,6 +13,7 @@ import { meta as audioEditorMeta } from './audio-editor/meta'
 import { meta as audioConverterMeta } from './audio-converter/meta'
 import { meta as qrGenerateMeta } from './qr-generate/meta'
 import { meta as qrScanMeta } from './qr-scan/meta'
+import { meta as crontabMeta } from './crontab/meta'
 
 export const tools: ToolMeta[] = [
   jsonFormatterMeta,
@@ -29,6 +30,7 @@ export const tools: ToolMeta[] = [
   audioConverterMeta,
   qrGenerateMeta,
   qrScanMeta,
+  crontabMeta,
 ]
 
 export const toolMap = new Map(tools.map(t => [t.id, t]))
