@@ -11,6 +11,8 @@ import { meta as imageMergeMeta } from './image-merge/meta'
 import { meta as videoAudioExtractMeta } from './video-audio-extract/meta'
 import { meta as audioEditorMeta } from './audio-editor/meta'
 import { meta as audioConverterMeta } from './audio-converter/meta'
+import { meta as qrGenerateMeta } from './qr-generate/meta'
+import { meta as qrScanMeta } from './qr-scan/meta'
 
 export const tools: ToolMeta[] = [
   jsonFormatterMeta,
@@ -25,6 +27,8 @@ export const tools: ToolMeta[] = [
   videoAudioExtractMeta,
   audioEditorMeta,
   audioConverterMeta,
+  qrGenerateMeta,
+  qrScanMeta,
 ]
 
 export const toolMap = new Map(tools.map(t => [t.id, t]))

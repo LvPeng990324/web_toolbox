@@ -14,13 +14,13 @@
 
 <script setup lang="ts">
 import { computed, type Component } from 'vue'
-import { Braces, Clock, Lock, GitCompareArrows, Regex, Image, Shrink, Crop, GalleryHorizontalEnd } from 'lucide-vue-next'
+import { Braces, Clock, Lock, GitCompareArrows, Regex, Image, Shrink, Crop, GalleryHorizontalEnd, QrCode, ScanLine, Music, Scissors, Repeat } from 'lucide-vue-next'
 import type { ToolMeta } from '../types/tool'
 
 const props = defineProps<{ tool: ToolMeta }>()
 
 const iconMap: Record<string, Component> = {
-  Braces, Clock, Lock, GitCompareArrows, Regex, Image, Shrink, Crop, GalleryHorizontalEnd,
+  Braces, Clock, Lock, GitCompareArrows, Regex, Image, Shrink, Crop, GalleryHorizontalEnd, QrCode, ScanLine, Music, Scissors, Repeat,
 }
 
 const iconComponent = computed(() => iconMap[props.tool.icon] || Braces)
