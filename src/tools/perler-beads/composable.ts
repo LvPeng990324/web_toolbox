@@ -162,6 +162,72 @@ function findClosestColor(r: number, g: number, b: number): MardoColor {
   return closest
 }
 
+// 生成底注画布
+function createFooterCanvas(colorCounts: ColorCount[], totalWidth: number): HTMLCanvasElement {
+  const footerCanvas = document.createElement('canvas')
+  const ctx = footerCanvas.getContext('2d')!
+
+  // 每个颜色模块的尺寸
+  const colorBlockSize = 20
+  const textHeight = 24
+  const padding = 10
+  const gap = 8
+
+  // 计算每个模块的宽度
+  const itemWidth = colorBlockSize + 60 + 60 + padding * 2 // 色块 + 型号 + 数量 + padding
+  
+  // 计算列数（根据图纸宽度，最多能放几列）
+  const maxCols = Math.max(1, Math.floor((totalWidth - padding * 2) / itemWidth))
+  const rows = Math.ceil(colorCounts.length / maxCols)
+
+  // 设置画布高度
+  const headerHeight = 30
+  footerCanvas.width = totalWidth
+  footerCanvas.height = headerHeight + rows * (colorBlockSize + textHeight + gap) + padding
+
+  // 绘制背景
+  ctx.fillStyle = '#ffffff'
+  ctx.fillRect(0, 0, footerCanvas.width, footerCanvas.height)
+
+  // 绘制顶部标题
+  ctx.fillStyle = '#333333'
+  ctx.font = 'bold 14px Arial, sans-serif'
+  ctx.textAlign = 'left'
+  ctx.textBaseline = 'middle'
+  ctx.fillText('所需拼豆颜色及数量', padding, padding + 15)
+
+  // 绘制每个颜色模块
+  colorCounts.forEach((color, index) => {
+    const col = index % maxCols
+    const row = Math.floor(index / maxCols)
+    const startX = padding + col * itemWidth
+    const startY = headerHeight + padding + row * (colorBlockSize + textHeight + gap)
+
+    // 绘制色块
+    ctx.fillStyle = `rgb(${color.r}, ${color.g}, ${color.b})`
+    ctx.fillRect(startX, startY, colorBlockSize, colorBlockSize)
+    
+    // 色块边框
+    ctx.strokeStyle = '#000000'
+    ctx.lineWidth = 1
+    ctx.strokeRect(startX, startY, colorBlockSize, colorBlockSize)
+
+    // 绘制型号
+    ctx.fillStyle = '#333333'
+    ctx.font = 'bold 12px Arial, sans-serif'
+    ctx.textAlign = 'left'
+    ctx.textBaseline = 'top'
+    ctx.fillText(color.code, startX + colorBlockSize + 5, startY)
+
+    // 绘制数量
+    ctx.fillStyle = '#666666'
+    ctx.font = '11px Arial, sans-serif'
+    ctx.fillText(`× ${color.count}`, startX + colorBlockSize + 5, startY + 14)
+  })
+
+  return footerCanvas
+}
+
 export function usePerlerBeads() {
   const image = ref<ImageFile | null>(null)
   const isProcessing = ref(false)
@@ -384,8 +450,19 @@ export function usePerlerBeads() {
       // 转换为数组并按数量排序
       colorCounts.value = Array.from(colorCountMap.values()).sort((a, b) => b.count - a.count)
 
+      // 生成底注
+      const footerCanvas = createFooterCanvas(colorCounts.value, options.value.gridWidth * 20)
+      const finalCanvas = document.createElement('canvas')
+      finalCanvas.width = canvas.width
+      finalCanvas.height = canvas.height + footerCanvas.height
+      const finalCtx = finalCanvas.getContext('2d')!
+      finalCtx.fillStyle = '#ffffff'
+      finalCtx.fillRect(0, 0, finalCanvas.width, finalCanvas.height)
+      finalCtx.drawImage(canvas, 0, 0)
+      finalCtx.drawImage(footerCanvas, 0, canvas.height)
+
       // 生成预览图
-      previewUrl.value = canvas.toDataURL('image/png')
+      previewUrl.value = finalCanvas.toDataURL('image/png')
     } catch (err) {
       error.value = '生成失败，请重试'
       console.error(err)
