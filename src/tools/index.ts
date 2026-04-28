@@ -14,6 +14,7 @@ import { meta as audioConverterMeta } from './audio-converter/meta'
 import { meta as qrGenerateMeta } from './qr-generate/meta'
 import { meta as qrScanMeta } from './qr-scan/meta'
 import { meta as crontabMeta } from './crontab/meta'
+import { meta as perlerBeadsMeta } from './perler-beads/meta'
 
 export const tools: ToolMeta[] = [
   jsonFormatterMeta,
@@ -31,6 +32,7 @@ export const tools: ToolMeta[] = [
   qrGenerateMeta,
   qrScanMeta,
   crontabMeta,
+  perlerBeadsMeta,
 ]
 
 export const toolMap = new Map(tools.map(t => [t.id, t]))
