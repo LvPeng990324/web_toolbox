@@ -3,7 +3,6 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 export function useTimestampConverter() {
   const currentTimestamp = ref(Math.floor(Date.now() / 1000))
   const tsInput = ref('')
-  const tsUnit = ref<'s' | 'ms'>('s')
   const dateTimeInput = ref('')
   const tsResult = ref('')
   const dateResult = ref('')
@@ -25,7 +24,9 @@ export function useTimestampConverter() {
   const convertTsToDate = () => {
     const raw = Number(tsInput.value)
     if (isNaN(raw)) { dateResult.value = '请输入有效数字'; return }
-    const ms = tsUnit.value === 's' ? raw * 1000 : raw
+    
+    // 自动识别时间戳单位：如果小于 1e10（约 2286 年），认为是秒级，否则认为是毫秒级
+    const ms = raw < 1e10 ? raw * 1000 : raw
     const d = new Date(ms)
     if (isNaN(d.getTime())) { dateResult.value = '无效时间戳'; return }
     dateResult.value = [
@@ -51,7 +52,7 @@ export function useTimestampConverter() {
   }
 
   return {
-    currentTimestamp, currentMs, tsInput, tsUnit, dateTimeInput,
+    currentTimestamp, currentMs, tsInput, dateTimeInput,
     tsResult, dateResult, convertTsToDate, convertDateToTs, setNow,
   }
 }

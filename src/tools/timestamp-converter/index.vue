@@ -8,7 +8,11 @@
       <div class="flex items-baseline justify-center gap-2 flex-wrap">
         <span class="text-3xl md:text-4xl font-bold font-mono text-primary">{{ currentTimestamp }}</span>
         <span class="text-sm font-mono" :style="{ color: 'var(--text-muted)' }">秒</span>
-        <span class="text-xl font-mono" :style="{ color: 'var(--text-muted)' }">/ {{ currentMs }} 毫秒</span>
+        <CopyButton :text="String(currentTimestamp)" />
+      </div>
+      <div class="flex items-baseline justify-center gap-2 flex-wrap mt-1">
+        <span class="text-xl font-mono" :style="{ color: 'var(--text-muted)' }">{{ currentMs }} 毫秒</span>
+        <CopyButton :text="String(currentMs)" />
       </div>
       <p class="text-sm mt-2" :style="{ color: 'var(--text-muted)' }">
         {{ new Date().toLocaleString('zh-CN') }}
@@ -20,11 +24,7 @@
       <div class="surface-card p-5">
         <h3 class="font-semibold mb-4" :style="{ color: 'var(--text-primary)' }">时间戳 → 日期时间</h3>
         <div class="flex gap-2 mb-3">
-          <input v-model="tsInput" type="text" placeholder="输入时间戳" class="input flex-1" />
-          <select v-model="tsUnit" class="input w-20">
-            <option value="s">秒</option>
-            <option value="ms">毫秒</option>
-          </select>
+          <input v-model="tsInput" type="text" placeholder="输入时间戳（自动识别秒/毫秒）" class="input flex-1" />
         </div>
         <div class="flex gap-2 mb-3">
           <button @click="convertTsToDate" class="btn btn-primary">转换</button>
@@ -45,10 +45,11 @@
 </template>
 
 <script setup lang="ts">
+import CopyButton from '../../components/CopyButton.vue'
 import { useTimestampConverter } from './composable'
 
 const {
-  currentTimestamp, currentMs, tsInput, tsUnit, dateTimeInput,
+  currentTimestamp, currentMs, tsInput, dateTimeInput,
   tsResult, dateResult, convertTsToDate, convertDateToTs, setNow,
 } = useTimestampConverter()
 </script>
