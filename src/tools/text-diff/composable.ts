@@ -48,5 +48,5 @@ export function useTextDiff() {
     return { added, removed }
   })
 
-  return { original, modified, mode, diffResult, unifiedLines, splitResult, stats }
+  return { original, modified, mode, unifiedLines, splitResult, stats }
 }

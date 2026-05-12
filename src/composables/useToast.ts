@@ -1,9 +1,14 @@
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
+
+export interface Toast {
+  id: number
+  message: string
+}
+
+const toasts = ref<Toast[]>([])
+let nextId = 0
 
 export function useToast() {
-  const toasts = ref<{ id: number; message: string }[]>([])
-  let nextId = 0
-
   const show = (message: string, duration = 2000) => {
     const id = nextId++
     toasts.value.push({ id, message })
@@ -16,11 +21,11 @@ export function useToast() {
 }
 
 export function useToastProvider() {
-  const toast = useToast()
+  const { show } = useToast()
 
   const showToast = (message: string) => {
-    toast.show(message)
+    show(message)
   }
 
-  return { toasts: toast.toasts, showToast }
+  return { toasts, showToast }
 }

@@ -1,4 +1,5 @@
 import { ref } from 'vue'
+import { formatSize } from '../../composables/useFileUpload'
 
 // MARD 拼豆颜色数据库
 export interface MardoColor {
@@ -236,9 +237,6 @@ export function usePerlerBeads() {
   const colorCounts = ref<ColorCount[]>([])
 
   // 标记当前正在修改的维度
-  const editingWidth = ref(false)
-  const editingHeight = ref(false)
-
   const options = ref<PerlerOptions>({
     gridWidth: 29,
     gridHeight: 29,
@@ -481,12 +479,6 @@ export function usePerlerBeads() {
     a.href = previewUrl.value
     a.download = `perler_pattern_${options.value.gridWidth}x${options.value.gridHeight}.png`
     a.click()
-  }
-
-  const formatSize = (bytes: number): string => {
-    if (bytes < 1024) return `${bytes} B`
-    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`
-    return `${(bytes / 1024 / 1024).toFixed(1)} MB`
   }
 
   return {

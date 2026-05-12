@@ -73,11 +73,12 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { Upload, X, ScanLine, AlertCircle, ExternalLink, Trash2 } from 'lucide-vue-next'
+import { formatSize } from '../../composables/useFileUpload'
 import CopyButton from '../../components/CopyButton.vue'
 import { useQrScan } from './composable'
 
 const fileInputRef = ref<HTMLInputElement | null>(null)
-const { image, result, error, isProcessing, handleFileSelect, handleDrop, clear } = useQrScan()
+const { image, result, error, handleFileSelect, handleDrop, clear } = useQrScan()
 
 const triggerFileInput = () => fileInputRef.value?.click()
 
@@ -91,27 +92,6 @@ const isUrl = computed(() => {
   }
 })
 
-const formatSize = (bytes: number): string => {
-  if (bytes < 1024) return `${bytes} B`
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`
-  return `${(bytes / 1024 / 1024).toFixed(1)} MB`
-}
+
 </script>
 
-<style scoped>
-.btn {
-  @apply inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium cursor-pointer transition-all;
-}
-.btn-primary {
-  @apply bg-primary text-white hover:bg-primary-light;
-}
-.btn-ghost {
-  color: var(--text-secondary);
-}
-.btn-ghost:hover {
-  background: rgba(0,0,0,0.05);
-}
-.dark .btn-ghost:hover {
-  background: rgba(255,255,255,0.1);
-}
-</style>

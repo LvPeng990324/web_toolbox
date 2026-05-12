@@ -1,4 +1,5 @@
 import { ref } from 'vue'
+import { formatSize } from '../../composables/useFileUpload'
 
 export interface CompressOptions {
   mode: 'percentage' | 'target'
@@ -142,12 +143,6 @@ export function useImageCompress() {
     a.download = filename
     a.click()
     URL.revokeObjectURL(url)
-  }
-
-  const formatSize = (bytes: number): string => {
-    if (bytes < 1024) return `${bytes} B`
-    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`
-    return `${(bytes / 1024 / 1024).toFixed(1)} MB`
   }
 
   return {

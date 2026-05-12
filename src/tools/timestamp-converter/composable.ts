@@ -31,7 +31,7 @@ export function useTimestampConverter() {
     if (isNaN(d.getTime())) { dateResult.value = '无效时间戳'; return }
     dateResult.value = [
       `本地时间: ${d.toLocaleString('zh-CN')}`,
-      `UTC 时间: ${d.toISOString()}`,
+      `UTC 时间: ${d.toUTCString()}`,
       `ISO 格式: ${d.toISOString()}`,
     ].join('\n')
   }

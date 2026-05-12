@@ -192,7 +192,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { Upload, Music, X, Play, Pause, Download, Eraser, Trash2, Loader2 } from 'lucide-vue-next'
 import { useAudioEditor } from './composable'
 
@@ -305,11 +305,3 @@ const onSeek = (e: Event) => {
 }
 </script>
 
-<style scoped>
-.btn { @apply inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium cursor-pointer transition-all; }
-.btn-primary { @apply bg-primary text-white hover:bg-primary-light disabled:opacity-50 disabled:cursor-not-allowed; }
-.btn-secondary { @apply bg-secondary text-white hover:bg-secondary-light disabled:opacity-50 disabled:cursor-not-allowed; }
-.btn-ghost { color: var(--text-secondary); }
-.btn-ghost:hover { background: rgba(0,0,0,0.05); }
-.dark .btn-ghost:hover { background: rgba(255,255,255,0.1); }
-</style>

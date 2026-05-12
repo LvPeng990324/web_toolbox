@@ -1,10 +1,5 @@
 import { ref, computed, watch } from 'vue'
 
-interface DateTimePair {
-  date: string
-  time: string
-}
-
 function formatDate(date: Date): string {
   const y = date.getFullYear()
   const m = String(date.getMonth() + 1).padStart(2, '0')

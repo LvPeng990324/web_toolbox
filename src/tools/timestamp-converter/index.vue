@@ -27,8 +27,8 @@
           <input v-model="tsInput" type="text" placeholder="输入时间戳（自动识别秒/毫秒）" class="input flex-1" />
         </div>
         <div class="flex gap-2 mb-3">
-          <button @click="convertTsToDate" class="btn btn-primary">转换</button>
-          <button @click="setNow" class="btn btn-ghost">使用当前</button>
+          <button @click="convertTsToDate" class="btn btn-sm btn-primary">转换</button>
+          <button @click="setNow" class="btn btn-sm btn-ghost">使用当前</button>
         </div>
         <pre v-if="dateResult" class="result-box">{{ dateResult }}</pre>
       </div>
@@ -37,7 +37,7 @@
       <div class="surface-card p-5">
         <h3 class="font-semibold mb-4" :style="{ color: 'var(--text-primary)' }">日期时间 → 时间戳</h3>
         <input v-model="dateTimeInput" type="datetime-local" class="input w-full mb-3" />
-        <button @click="convertDateToTs" class="btn btn-primary mb-3">转换</button>
+        <button @click="convertDateToTs" class="btn btn-sm btn-primary mb-3">转换</button>
         <pre v-if="tsResult" class="result-box">{{ tsResult }}</pre>
       </div>
     </div>
@@ -55,14 +55,6 @@ const {
 </script>
 
 <style scoped>
-.btn {
-  @apply inline-flex items-center px-3 py-1.5 rounded-lg text-sm font-medium cursor-pointer transition-all active:scale-95;
-}
-.btn-primary { @apply bg-primary text-white hover:bg-primary-light; }
-.btn-ghost { color: var(--text-secondary); }
-.btn-ghost:hover { background: rgba(0,0,0,0.05); }
-.dark .btn-ghost:hover { background: rgba(255,255,255,0.1); }
-
 .input {
   @apply px-3 py-2 rounded-lg text-sm outline-none transition-all;
   background-color: var(--surface);

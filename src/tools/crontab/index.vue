@@ -27,7 +27,7 @@
         </div>
         <!-- 当前表达式各字段高亮 -->
         <div class="flex gap-1 mb-5">
-          <template v-for="(part, idx) in expressionParts" :key="idx">
+          <template v-for="(part, _idx) in expressionParts" :key="_idx">
             <div class="flex-1 text-center py-1.5 rounded text-sm font-mono font-semibold"
               :style="{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', color: 'var(--text-primary)' }">
               {{ part }}
@@ -145,6 +145,8 @@
 import { computed } from 'vue'
 import { Timer, Copy, AlertCircle } from 'lucide-vue-next'
 import { useCrontab, type CronField } from './composable'
+import { useCopyToClipboard } from '../../composables/useCopyToClipboard'
+import { useToast } from '../../composables/useToast'
 
 const {
   expression, error, fieldOptions, fieldModes, fieldSelected,
@@ -202,29 +204,21 @@ const formatRelative = (dt: Date): string => {
   return `${days} 天 ${hours % 24} 小时后`
 }
 
+const { copy: copyText } = useCopyToClipboard()
+const { show } = useToast()
+
 const copyExpression = () => {
-  navigator.clipboard.writeText(expression.value)
+  copyText(expression.value)
+  show('已复制到剪贴板')
 }
 
 const copyDateTime = (dt: Date) => {
-  navigator.clipboard.writeText(formatDateTime(dt))
+  copyText(formatDateTime(dt))
+  show('已复制到剪贴板')
 }
 </script>
 
 <style scoped>
-.btn {
-  @apply inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium cursor-pointer transition-all;
-}
-.btn-ghost {
-  color: var(--text-secondary);
-}
-.btn-ghost:hover {
-  background: rgba(0,0,0,0.05);
-}
-.dark .btn-ghost:hover {
-  background: rgba(255,255,255,0.1);
-}
-
 .cron-input {
   width: 100%;
   padding: 10px 14px;

@@ -12,7 +12,7 @@
       </div>
       <!-- Flags -->
       <div class="flex flex-wrap gap-4 text-sm">
-        <label v-for="(val, key) in flags" :key="key" class="flex items-center gap-1.5 cursor-pointer">
+        <label v-for="(_val, key) in flags" :key="key" class="flex items-center gap-1.5 cursor-pointer">
           <input type="checkbox" v-model="flags[key]" class="accent-primary" />
           <span class="font-mono font-semibold" :style="{ color: 'var(--text-primary)' }">{{ key }}</span>
           <span :style="{ color: 'var(--text-muted)' }">{{ flagDesc[key] }}</span>

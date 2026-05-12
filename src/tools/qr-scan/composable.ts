@@ -1,5 +1,6 @@
 import { ref } from 'vue'
 import jsQR from 'jsqr'
+import { readFileAsDataURL } from '../../composables/useFileUpload'
 
 export interface QrScanResult {
   content: string
@@ -45,16 +46,11 @@ export function useQrScan() {
   }
 
   const readFileAsDataUrl = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader()
-      reader.onload = (e) => resolve(e.target?.result as string)
-      reader.onerror = reject
-      reader.readAsDataURL(file)
-    })
+    return readFileAsDataURL(file)
   }
 
   const scanQrCode = (dataUrl: string): Promise<void> => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const img = new Image()
       img.onload = () => {
         const canvas = document.createElement('canvas')

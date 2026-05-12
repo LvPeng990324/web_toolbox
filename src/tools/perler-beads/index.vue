@@ -223,11 +223,5 @@ const triggerFileInput = () => fileInputRef.value?.click()
 </script>
 
 <style scoped>
-.btn { @apply inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium cursor-pointer transition-all; }
-.btn-primary { @apply bg-primary text-white hover:bg-primary-light disabled:opacity-50 disabled:cursor-not-allowed; }
-.btn-ghost { color: var(--text-secondary); }
-.btn-ghost:hover { background: rgba(0,0,0,0.05); }
-.dark .btn-ghost:hover { background: rgba(255,255,255,0.1); }
-.btn-outline { border: 1px solid var(--border); color: var(--text-secondary); }
-.btn-outline:hover { background: var(--surface); }
+
 </style>

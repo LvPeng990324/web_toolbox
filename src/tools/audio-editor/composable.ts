@@ -1,4 +1,5 @@
 import { ref, shallowRef } from 'vue'
+import { formatSize } from '../../composables/useFileUpload'
 
 export interface AudioFile {
   file: File
@@ -328,12 +329,6 @@ export function useAudioEditor() {
     a.download = filename
     a.click()
     URL.revokeObjectURL(url)
-  }
-
-  const formatSize = (bytes: number): string => {
-    if (bytes < 1024) return `${bytes} B`
-    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`
-    return `${(bytes / 1024 / 1024).toFixed(1)} MB`
   }
 
   const formatTime = (seconds: number): string => {

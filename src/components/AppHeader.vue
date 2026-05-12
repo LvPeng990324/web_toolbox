@@ -42,8 +42,7 @@ import { Sun, Moon, ArrowLeft, LayoutGrid } from 'lucide-vue-next'
 import { useTheme } from '../composables/useTheme'
 import { useToastProvider } from '../composables/useToast'
 
-const { isDark, initTheme, toggleTheme } = useTheme()
-initTheme()
+const { isDark, toggleTheme } = useTheme()
 
 const { toasts } = useToastProvider()
 

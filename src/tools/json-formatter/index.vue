@@ -4,10 +4,10 @@
 
     <!-- Toolbar -->
     <div class="flex flex-wrap gap-2 mb-4">
-      <button @click="format" class="btn btn-primary"><FileJson :size="16" class="mr-1.5" /> 格式化</button>
-      <button @click="compress" class="btn btn-primary"><Minimize2 :size="16" class="mr-1.5" /> 压缩</button>
+      <button @click="format" class="btn btn-sm btn-primary"><FileJson :size="16" class="mr-1.5" /> 格式化</button>
+      <button @click="compress" class="btn btn-sm btn-primary"><Minimize2 :size="16" class="mr-1.5" /> 压缩</button>
       <CopyButton :text="input" />
-      <button @click="clear" class="btn btn-ghost"><Trash2 :size="16" class="mr-1.5" /> 清空</button>
+      <button @click="clear" class="btn btn-sm btn-ghost"><Trash2 :size="16" class="mr-1.5" /> 清空</button>
     </div>
 
     <!-- Editor -->
@@ -51,22 +51,6 @@ const syncScroll = (e: Event) => {
 </script>
 
 <style scoped>
-.btn {
-  @apply inline-flex items-center px-3 py-1.5 rounded-lg text-sm font-medium cursor-pointer transition-all active:scale-95;
-}
-.btn-primary {
-  @apply bg-primary text-white hover:bg-primary-light;
-}
-.btn-ghost {
-  color: var(--text-secondary);
-}
-.btn-ghost:hover {
-  background: rgba(0,0,0,0.05);
-}
-.dark .btn-ghost:hover {
-  background: rgba(255,255,255,0.1);
-}
-
 .editor-wrapper {
   display: flex;
   border-radius: 8px;

@@ -1,4 +1,5 @@
 import { ref } from 'vue'
+import { formatSize } from '../../composables/useFileUpload'
 
 export interface VideoFile {
   file: File
@@ -184,12 +185,6 @@ export function useVideoAudioExtract() {
     video.value = null
     audioUrl.value = ''
     error.value = ''
-  }
-
-  const formatSize = (bytes: number): string => {
-    if (bytes < 1024) return `${bytes} B`
-    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`
-    return `${(bytes / 1024 / 1024).toFixed(1)} MB`
   }
 
   const formatDuration = (seconds: number): string => {
