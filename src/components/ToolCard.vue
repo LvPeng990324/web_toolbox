@@ -18,7 +18,7 @@ import {
   Braces, Clock, Lock, GitCompareArrows, Regex,
   Image, Shrink, Crop, GalleryHorizontalEnd,
   QrCode, ScanLine, Music, Scissors, Repeat, Timer,
-  Grid3x3, Film
+  Grid3x3, Film, ClipboardPaste
 } from 'lucide-vue-next'
 import type { ToolMeta } from '../types/tool'
 
@@ -28,7 +28,7 @@ const iconMap: Record<string, Component> = {
   Braces, Clock, Lock, GitCompareArrows, Regex,
   Image, Shrink, Crop, GalleryHorizontalEnd,
   QrCode, ScanLine, Music, Scissors, Repeat, Timer,
-  Grid3x3, Film,
+  Grid3x3, Film, ClipboardPaste,
 }
 
 const iconComponent = computed(() => iconMap[props.tool.icon] || Braces)
