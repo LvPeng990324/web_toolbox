@@ -48,7 +48,7 @@ export function useDateDuration() {
   const today = formatDate(new Date())
   const nowTime = formatTime(new Date())
 
-  const startDate = ref(today)
+  const startDate = ref('2026-01-02')
   const endDate = ref(today)
   const includeTime = ref(false)
   const startTime = ref('00:00:00')
