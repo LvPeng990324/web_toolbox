@@ -20,6 +20,7 @@ Web Toolbox 是一个基于浏览器的在线开发工具集合，所有计算�
   - `diff` — 文本差异对比
   - `jsqr` — 二维码识别
   - `qrcode` — 二维码生成
+  - `vue-json-pretty` — JSON 树形可视化（JSON 格式化工具输出面板使用）
 
 ## 项目结构
 
@@ -101,6 +102,15 @@ npm run preview
    - 卡片容器使用 `.surface-card`
    - 文本域和输入框遵循统一的圆角、边框、聚焦样式
 
+### 输出面板与可视化
+
+部分工具的"输出"区域需要比纯文本更丰富的展示（如 JSON 树形结构）。约定：
+
+- 优先使用成熟的开源 Vue 组件（如 `vue-json-pretty`），通过 `:deep()` 选择器覆盖其默认样式以匹配项目 CSS 变量
+- 输出区与输入区并列时使用 `grid grid-cols-1 lg:grid-cols-2 gap-4` 布局，小屏自动堆叠
+- 输出区支持视图模式切换时（如树形 / 文本），用按钮组放在面板头部右侧
+- 组件主题与项目主题联动：监听 `useTheme().isDark`，向第三方组件传入对应的 `theme` 字符串，并在样式中按 `.dark .xxx :deep(...)` 处理深色细节
+
 ### 图标规范
 
 - 统一使用 `lucide-vue-next` 图标库
@@ -131,6 +141,16 @@ npm run preview
 - 首页 `/`：展示所有工具卡片，支持搜索和分类筛选
 - 工具页 `/tool/:id`：通过 `defineAsyncComponent` 动态导入 `src/tools/:id/index.vue`
 - 无效工具 ID：回退到 `NotFound.vue`
+
+## 工具功能说明
+
+### `json-formatter` — JSON 格式化
+
+- 输入区与输出区分栏展示（`lg` 断点双列，移动端单列堆叠）
+- 输出区支持两种视图：`tree`（`vue-json-pretty` 树形可折叠，节点按 key/string/boolean/number/null 类型配色）/ `text`（仅显示格式化后的文本）
+- 实时校验 JSON 合法性；非法时输出区显示错误占位，合法时右上角出现"有效 JSON"标识
+- 顶部按钮：格式化、压缩、示例（写入示例数据）、复制（输入文本）、清空
+- 主题跟随 `useTheme()`，并向组件传入 `theme="light" | "dark"`
 
 ## 状态管理与共享逻辑
 
